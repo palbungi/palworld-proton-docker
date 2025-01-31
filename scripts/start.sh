@@ -1,9 +1,13 @@
 #!/bin/bash
 source /init.sh
-source /palworld/Scripts/config.sh
+source /scripts/config.sh
 
 # Declare directories
-serverExe="$serverDir/Pal/Binaries/Win64/PalServer-Win64-Test.exe"
+
+
+echo ">>> Server Dir: ${serverDir}"
+
+serverExe="$serverDir/Pal/Binaries/Win64/PalServer-Win64-Shipping-Cmd.exe"
 
 function startServer() {
     setupServerSettings
@@ -22,7 +26,8 @@ function startServer() {
 #        send_start_notification
 #    fi
     echo -e "\033[32;1m>>> Starting Palworld Server <<<\033[0m"
-    $PROTON run $serverExe $startSettings
+    cd "${serverDir}/Pal/Binaries/Win64"
+    $PROTON run ./PalServer-Win64-Shipping-Cmd.exe $startSettings
     echo ">>> Palworld server stopping"
 }
 

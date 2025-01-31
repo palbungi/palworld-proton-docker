@@ -1,13 +1,18 @@
-version: '3.9'
 services:
   palworld:
-    restart: always
-    container_name: modded-palworld
-    image: modded-palworld-docker-server
+    #restart: always
+    container_name: palworld-win
+    image: palworld-win
+    build: .
     env_file:
-      - ./.env
+      - .env
     networks:
       - default
+    volumes:
+      - ./palworld:/palworld
+      - /etc/machine-id:/etc/machine-id:ro
+      - /etc/localtime:/etc/localtime:ro
     ports:
       - "8211:8211/udp"
       - "25575:25575/tcp"
+      - "8212:8212/tcp"

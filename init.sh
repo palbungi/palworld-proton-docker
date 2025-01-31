@@ -8,9 +8,9 @@ function installServer() {
 	    send_webhook_notification "Installing server" "Server is being installed" "$WEBHOOK_INFO_COLOR"
 	fi
 	${STEAMCMD} +@sSteamCmdForcePlatformType windows +force_install_dir "$serverDir" +login anonymous +app_update 2394010 validate +quit
-	wget -P "$serverDir"/Pal/Binaries/Win64 https://github.com/UE4SS-RE/RE-UE4SS/releases/download/v3.0.0/UE4SS_v3.0.0.zip \
-	    && unzip -q "$serverDir"/Pal/Binaries/Win64/UE4SS_v3.0.0.zip -d "$serverDir"/Pal/Binaries/Win64 \
-	    && rm "$serverDir"/Pal/Binaries/Win64/UE4SS_v3.0.0.zip \
+	wget -P "$serverDir"/Pal/Binaries/Win64 https://github.com/UE4SS-RE/RE-UE4SS/releases/download/v3.0.1/UE4SS_v3.0.1.zip \
+	    && unzip -q "$serverDir"/Pal/Binaries/Win64/UE4SS_v3.0.1.zip -d "$serverDir"/Pal/Binaries/Win64 \
+	    && rm "$serverDir"/Pal/Binaries/Win64/UE4SS_v3.0.1.zip \
 	    && rm "$serverDir"/Pal/Binaries/Win64/README.md \
 	    && rm "$serverDir"/Pal/Binaries/Win64/Changelog.md
 
@@ -40,7 +40,7 @@ function setupCron() {
 
 function installMods() {
 	echo -e "\033[32;1m>>> Installing Mods <<<\033[0m"
-	mv "$serverDir"/Downloads/dll/* "$serverDir"/Pal/Binaries/Win64/Mods
-	mv "$serverDir"/Downloads/pak/* "$serverDir"/Pal/Content/Paks
-	mv "$serverDir"/Downloads/Win64/* "$serverDir"/Pal/Binaries/Win64
+	cp -R /mods/dll/* "$serverDir"/Pal/Binaries/Win64/Mods
+	cp -R /mods/pak/* "$serverDir"/Pal/Content/Paks
+	cp -R /mods/Win64/* "$serverDir"/Pal/Binaries/Win64
 }

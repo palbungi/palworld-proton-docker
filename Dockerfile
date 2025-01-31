@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y procps xdg-user-dirs wget unzip sed pyt
     && rm -rf /var/lib/apt/lists/*
 
 # Install supercronic 
-RUN wget https://github.com/aptible/supercronic/releases/download/v0.2.29/supercronic-linux-amd64 \
-    && echo "cd48d45c4b10f3f0bfdd3a57d054cd05ac96812b  supercronic-linux-amd64" | sha1sum -c - \
+RUN wget https://github.com/aptible/supercronic/releases/download/v0.2.33/supercronic-linux-amd64 \
+    && echo "71b0d58cc53f6bd72cf2f293e09e294b79c666d8  supercronic-linux-amd64" | sha1sum -c - \
     && chmod +x supercronic-linux-amd64 \
     && mv supercronic-linux-amd64 "/usr/local/bin/supercronic-linux-amd64" \
     && ln -s "/usr/local/bin/supercronic-linux-amd64" /usr/local/bin/supercronic
@@ -28,31 +28,31 @@ RUN wget https://github.com/gorcon/rcon-cli/releases/download/v0.10.3/rcon-0.10.
 WORKDIR /home/steam/.steam/steam
 # Install Proton
 RUN mkdir -p compatibilitytools.d/
-RUN wget -O - https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton8-28/GE-Proton8-28.tar.gz \
+RUN wget -O - https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton9-23/GE-Proton9-23.tar.gz \
     | tar -xz -C compatibilitytools.d/
 RUN mkdir -p steamapps/compatdata/2394010 
-RUN cp -r compatibilitytools.d/GE-Proton8-28/files/share/default_pfx steamapps/compatdata/2394010
+RUN cp -r compatibilitytools.d/GE-Proton9-23/files/share/default_pfx steamapps/compatdata/2394010
 RUN chown -R steam:steam /home/steam
 
 
 # Setup directories
-RUN mkdir -p /palworld/Scripts /palworld/Downloads /palworld/Backups \
+RUN mkdir -p /scripts /mods /palworld/backups \
     && chown -R steam:steam /palworld
 
 ENV STEAM_COMPAT_CLIENT_INSTALL_PATH="/home/${USER}/.steam/steam" \
     STEAM_COMPAT_DATA_PATH=/home/steam/.steam/steam/steamapps/compatdata/2394010 \
-    PROTON=/home/steam/.steam/steam/compatibilitytools.d/GE-Proton8-28/proton \
+    PROTON=/home/steam/.steam/steam/compatibilitytools.d/GE-Proton9-23/proton \
     STEAMCMD=/home/steam/steamcmd/steamcmd.sh \
     PUID=1000 \
     PGID=1000
-#VOLUME ["/palworld"]
+VOLUME ["/palworld"]
 USER steam
 EXPOSE 8211/udp 25575/tcp
 
 # Copy files over
-COPY --chown=steam:steam --chmod=755 ./scripts/*.sh /palworld/Scripts
+COPY --chown=steam:steam --chmod=755 ./scripts/*.sh /scripts
 COPY --chown=steam:steam --chmod=755 /init.sh /
 ADD --chown=steam:steam --chmod=440 rcon.yaml /home/steam/steamcmd/rcon.yaml
-ADD --chown=steam:steam mods /palworld/Downloads
+ADD --chown=steam:steam mods /mods
 
-ENTRYPOINT ["/palworld/Scripts/start.sh"]
+ENTRYPOINT ["/scripts/start.sh"]
