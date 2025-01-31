@@ -1,5 +1,5 @@
 # Windows Palworld Dedicated Server Docker
-*Windows version of the Palworld Dedicated Server docker image*
+*Windows version of the Palworld Dedicated Server docker image using [Proton](https://github.com/GloriousEggroll/proton-ge-custom).*
 
 
 ## How to use
@@ -32,8 +32,7 @@ services:
 
 ```
 cp default.env .env
-vi .env
-docker compose up
+docker compose -f docker-compose.dev.yml up
 ```
 
 ## Credits

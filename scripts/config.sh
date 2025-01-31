@@ -287,7 +287,7 @@ function setupServerSettings() {
             sed -E -i "s/RESTAPIEnabled=[a-zA-Z]*/RESTAPIEnabled=$REST_API_ENABLED/" ${windowsDir}/PalWorldSettings.ini
         fi
         if [[ ! -z ${REST_API_PORT+x} ]]; then
-            echo "Setting RCONPort to $REST_API_PORT"
+            echo "Setting RESTAPIPort to $REST_API_PORT"
             sed -E -i "s/RESTAPIPort=[0-9]*/RESTAPIPort=$REST_API_PORT/" ${windowsDir}/PalWorldSettings.ini
         fi
         if [[ ! -z ${REGION+x} ]]; then

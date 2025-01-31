@@ -1,8 +1,9 @@
 services:
   palworld:
     #restart: always
-    container_name: windows-palworld-server-docker
-    image: wisdomsky/windows-palworld-server-docker
+    container_name: palworld-win
+    image: palworld-win
+    build: .
     env_file:
       - .env
     networks:
