@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y procps xdg-user-dirs wget unzip sed pyt
     && rm -rf /var/lib/apt/lists/*
 
 # Install supercronic 
-RUN wget https://github.com/aptible/supercronic/releases/download/v0.2.33/supercronic-linux-amd64 \
-    && echo "71b0d58cc53f6bd72cf2f293e09e294b79c666d8  supercronic-linux-amd64" | sha1sum -c - \
+RUN wget https://github.com/aptible/supercronic/releases/download/v0.2.34/supercronic-linux-amd64 \
+    && echo "e8631edc1775000d119b70fd40339a7238eece14  supercronic-linux-amd64" | sha1sum -c - \
     && chmod +x supercronic-linux-amd64 \
     && mv supercronic-linux-amd64 "/usr/local/bin/supercronic-linux-amd64" \
     && ln -s "/usr/local/bin/supercronic-linux-amd64" /usr/local/bin/supercronic
