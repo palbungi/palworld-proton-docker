@@ -8,11 +8,13 @@ function installServer() {
 	    send_webhook_notification "Installing server" "Server is being installed" "$WEBHOOK_INFO_COLOR"
 	fi
 	${STEAMCMD} +@sSteamCmdForcePlatformType windows +force_install_dir "$serverDir" +login anonymous +app_update 2394010 validate +quit
-	wget -P "$serverDir"/Pal/Binaries/Win64 https://github.com/UE4SS-RE/RE-UE4SS/releases/download/v3.0.1/UE4SS_v3.0.1.zip \
-	    && unzip -q "$serverDir"/Pal/Binaries/Win64/UE4SS_v3.0.1.zip -d "$serverDir"/Pal/Binaries/Win64 \
-	    && rm "$serverDir"/Pal/Binaries/Win64/UE4SS_v3.0.1.zip \
-	    && rm "$serverDir"/Pal/Binaries/Win64/README.md \
-	    && rm "$serverDir"/Pal/Binaries/Win64/Changelog.md
+	wget -P "$serverDir"/Pal/Binaries/Win64 https://github.com/Okaetsu/RE-UE4SS/releases/download/experimental-palworld/UE4SS-Palworld.zip \
+	    && unzip -q "$serverDir"/Pal/Binaries/Win64/UE4SS-Palworld.zip -d "$serverDir"/Pal/Binaries/Win64 \
+	    && rm "$serverDir"/Pal/Binaries/Win64/UE4SS-Palworld.zip
+
+	wget -P "$serverDir"/Pal/Binaries/Win64/ue4ss/Mods https://github.com/Okaetsu/PalSchema/releases/download/0.5.0/PalSchema_0.5.0.zip \
+	    && unzip -q "$serverDir"/Pal/Binaries/Win64/ue4ss/Mods/PalSchema_0.5.0.zip -d "$serverDir"/Pal/Binaries/Win64/ue4ss/Mods \
+	    && rm "$serverDir"/Pal/Binaries/Win64/ue4ss/Mods/PalSchema_0.5.0.zip
 
 	# Turn off GuiConsole
 	sed -i 's/GuiConsoleEnabled = 1/GuiConsoleEnabled = 0/' "$serverDir"/Pal/Binaries/Win64/UE4SS-settings.ini
