@@ -1,4 +1,3 @@
-#!/bin/bash
 # Declare directories
 serverDir=/palworld
 
@@ -8,24 +7,9 @@ function installServer() {
 	    send_webhook_notification "Installing server" "Server is being installed" "$WEBHOOK_INFO_COLOR"
 	fi
 	${STEAMCMD} +@sSteamCmdForcePlatformType windows +force_install_dir "$serverDir" +login anonymous +app_update 2394010 validate +quit
-	
-	# Install UE4SS
 	wget -P "$serverDir"/Pal/Binaries/Win64 https://github.com/Okaetsu/RE-UE4SS/releases/download/experimental-palworld/UE4SS-Palworld.zip \
 	    && unzip -q "$serverDir"/Pal/Binaries/Win64/UE4SS-Palworld.zip -d "$serverDir"/Pal/Binaries/Win64 \
 	    && rm "$serverDir"/Pal/Binaries/Win64/UE4SS-Palworld.zip
-
-	# Install PalSchema
-	wget -P "$serverDir"/Pal/Binaries/Win64/ue4ss/Mods https://github.com/Okaetsu/PalSchema/releases/download/0.5.0/PalSchema_0.5.0.zip \
-	    && unzip -q "$serverDir"/Pal/Binaries/Win64/ue4ss/Mods/PalSchema_0.5.0.zip -d "$serverDir"/Pal/Binaries/Win64/ue4ss/Mods \
-	    && rm "$serverDir"/Pal/Binaries/Win64/ue4ss/Mods/PalSchema_0.5.0.zip
-
-	# Install PalDefender
-	wget -P "$serverDir"/Pal/Binaries/Win64 https://github.com/Ultimeit/PalDefender/releases/latest/download/PalDefender_ProtonWine.zip
-	unzip -q "$serverDir"/Pal/Binaries/Win64/PalDefender_ProtonWine.zip -d "$serverDir"/Pal/Binaries/Win64
-	rm "$serverDir"/Pal/Binaries/Win64/PalDefender_ProtonWine.zip
-	mkdir -p "$serverDir"/Pal/Binaries/Win64/PalDefender
-	wget -P "$serverDir"/Pal/Binaries/Win64/PalDefender https://raw.githubusercontent.com/palbungi/palworld-proton/refs/heads/main/Config.json
-	sed -i "s|127.0.0.1|$(who | awk '{print $5}' | tr -d '()')|g" "$serverDir"/Pal/Binaries/Win64/PalDefender/Config.json
 
 	# Turn off GuiConsole
 	sed -i 's/GuiConsoleEnabled = 1/GuiConsoleEnabled = 0/' "$serverDir"/Pal/Binaries/Win64/UE4SS-settings.ini
